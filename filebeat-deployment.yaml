@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: filebeat
+  name: filebeat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: filebeat
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: filebeat
+    spec:
+      containers:
+        - image: prima/filebeat
+          name: filebeat
+          resources: {}
+          volumeMounts:
+            - mountPath: /app
+              name: uchuva
+            - mountPath: /filebeat.yml
+              name: filebeat-claim1
+      restartPolicy: Always
+      volumes:
+        - name: uchuva
+          persistentVolumeClaim:
+            claimName: uchuva
+        - name: filebeat-claim1
+          persistentVolumeClaim:
+            claimName: filebeat-claim1
+status: {}

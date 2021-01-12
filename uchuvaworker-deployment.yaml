@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: uchuvaworker
+  name: uchuvaworker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: uchuvaworker
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: uchuvaworker
+    spec:
+      containers:
+        - args:
+            - npm
+            - run
+            - worker
+          env:
+            - name: BMANAGER
+              value: "3"
+            - name: CONDOR_JOB_OWNER
+              value: uchuva
+            - name: CONDOR_URL
+              value: http://htcondor:8080/
+            - name: QUEUE
+              value: amqp://user:password@rabbit
+            - name: SHARE
+              value: /app
+          image: steven0414/uchuva
+          name: uchuvaworker
+          ports:
+            - containerPort: 3000
+          resources: {}
+          volumeMounts:
+            - mountPath: /app
+              name: uchuva
+      restartPolicy: Always
+      volumes:
+        - name: uchuva
+          persistentVolumeClaim:
+            claimName: uchuva
+status: {}

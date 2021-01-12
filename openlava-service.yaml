@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: openlava
+  name: openlava
+spec:
+  ports:
+    - name: "22"
+      port: 22
+      targetPort: 22
+  selector:
+    io.kompose.service: openlava
+status:
+  loadBalancer: {}

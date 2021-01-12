@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: openlava
+  name: openlava
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: openlava
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: openlava
+    spec:
+      containers:
+        - image: steven0414/openlava
+          name: openlava
+          ports:
+            - containerPort: 22
+          resources: {}
+          volumeMounts:
+            - mountPath: /app
+              name: uchuva
+      hostname: docker
+      restartPolicy: Always
+      volumes:
+        - name: uchuva
+          persistentVolumeClaim:
+            claimName: uchuva
+status: {}
