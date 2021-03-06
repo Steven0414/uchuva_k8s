@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert
+    kompose.cmd: kompose convert -f docker-compose.yml
     kompose.service.type: loadbalancer
     kompose.version: 1.22.0 (955b78124)
   creationTimestamp: null
@@ -19,7 +19,7 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert
+        kompose.cmd: kompose convert -f docker-compose.yml
         kompose.service.type: loadbalancer
         kompose.version: 1.22.0 (955b78124)
       creationTimestamp: null
