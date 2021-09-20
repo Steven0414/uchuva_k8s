@@ -107,7 +107,7 @@ cd ./test
 sudo docker run -i loadimpact/k6 run -< loadtest.js
 ```
 
-A complete testing guide with K6/loadImpact can be found at [K6's official documentation](https://k6.io/docs/).
+A complete testing guide with K6/LoadImpact can be found at [K6's official documentation](https://k6.io/docs/).
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
