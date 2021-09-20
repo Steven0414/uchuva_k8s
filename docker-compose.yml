@@ -1,10 +1,11 @@
 version: '3'
 
 services:
-
-  uchuva:
+  
+  # Microservices front-end
+  uchuva_index:    
     image:
-      steven0414/uchuva
+      steven0414/uchuva_index
     restart:
       always
     volumes:
@@ -20,8 +21,169 @@ services:
       BMANAGER: 3
       QUEUE : 'amqp://user:password@rabbit'
     labels:
-      kompose.service.type: loadbalancer
-
+      kompose.service.type: nodeport
+      
+  uchuva_admin:    
+    image:
+      steven0414/uchuva_admin
+    restart:
+      always
+    volumes:
+      - uchuva:/app
+    ports:
+      - "3000:3000"
+    links:
+      - rabbit
+    environment:
+      SHARE: /app
+      CONDOR_URL: http://htcondor:8080/
+      CONDOR_JOB_OWNER: uchuva
+      BMANAGER: 3
+      QUEUE : 'amqp://user:password@rabbit'
+    labels:
+      kompose.service.type: nodeport
+      
+  uchuva_builds:    
+    image:
+      steven0414/uchuva_builds
+    restart:
+      always
+    volumes:
+      - uchuva:/app
+    ports:
+      - "3000:3000"
+    links:
+      - rabbit
+    environment:
+      SHARE: /app
+      CONDOR_URL: http://htcondor:8080/
+      CONDOR_JOB_OWNER: uchuva
+      BMANAGER: 3
+      QUEUE : 'amqp://user:password@rabbit'
+    labels:
+      kompose.service.type: nodeport
+      
+  uchuva_consola:    
+    image:
+      steven0414/uchuva_consola
+    restart:
+      always
+    volumes:
+      - uchuva:/app
+    ports:
+      - "3000:3000"
+    links:
+      - rabbit
+    environment:
+      SHARE: /app
+      CONDOR_URL: http://htcondor:8080/
+      CONDOR_JOB_OWNER: uchuva
+      BMANAGER: 3
+      QUEUE : 'amqp://user:password@rabbit'
+    labels:
+      kompose.service.type: nodeport
+      
+  uchuva_dag:    
+    image:
+      steven0414/uchuva_dag
+    restart:
+      always
+    volumes:
+      - uchuva:/app
+    ports:
+      - "3000:3000"
+    links:
+      - rabbit
+    environment:
+      SHARE: /app
+      CONDOR_URL: http://htcondor:8080/
+      CONDOR_JOB_OWNER: uchuva
+      BMANAGER: 3
+      QUEUE : 'amqp://user:password@rabbit'
+    labels:
+      kompose.service.type: nodeport
+      
+  uchuva_ejecuciones:    
+    image:
+      steven0414/uchuva_ejecuciones
+    restart:
+      always
+    volumes:
+      - uchuva:/app
+    ports:
+      - "3000:3000"
+    links:
+      - rabbit
+    environment:
+      SHARE: /app
+      CONDOR_URL: http://htcondor:8080/
+      CONDOR_JOB_OWNER: uchuva
+      BMANAGER: 3
+      QUEUE : 'amqp://user:password@rabbit'
+    labels:
+      kompose.service.type: nodeport
+  
+  uchuva_programas:    
+    image:
+      steven0414/uchuva_programas
+    restart:
+      always
+    volumes:
+      - uchuva:/app
+    ports:
+      - "3000:3000"
+    links:
+      - rabbit
+    environment:
+      SHARE: /app
+      CONDOR_URL: http://htcondor:8080/
+      CONDOR_JOB_OWNER: uchuva
+      BMANAGER: 3
+      QUEUE : 'amqp://user:password@rabbit'
+    labels:
+      kompose.service.type: nodeport
+  
+  uchuva_run:    
+    image:
+      steven0414/uchuva_run
+    restart:
+      always
+    volumes:
+      - uchuva:/app
+    ports:
+      - "3000:3000"
+    links:
+      - rabbit
+    environment:
+      SHARE: /app
+      CONDOR_URL: http://htcondor:8080/
+      CONDOR_JOB_OWNER: uchuva
+      BMANAGER: 3
+      QUEUE : 'amqp://user:password@rabbit'
+    labels:
+      kompose.service.type: nodeport
+      
+  uchuva_vfs:    
+    image:
+      steven0414/uchuva_vfs
+    restart:
+      always
+    volumes:
+      - uchuva:/app
+    ports:
+      - "3000:3000"
+    links:
+      - rabbit
+    environment:
+      SHARE: /app
+      CONDOR_URL: http://htcondor:8080/
+      CONDOR_JOB_OWNER: uchuva
+      BMANAGER: 3
+      QUEUE : 'amqp://user:password@rabbit'
+    labels:
+      kompose.service.type: nodeport
+  
+  # Worker
   uchuvaworker:
     image: steven0414/uchuva
     command:
@@ -33,7 +195,7 @@ services:
     links:
       - rabbit
     restart:
-      always    
+      always
     environment:
       SHARE: /app
       CONDOR_URL: http://htcondor:8080/
@@ -52,11 +214,12 @@ services:
       - "15692"
       - "25672"
       - "4369"
-      - "5671"      
+      - "5671"
     environment:
       RABBITMQ_DEFAULT_USER : user
       RABBITMQ_DEFAULT_PASS : password
 
+  # Internal services
   mongo:
     image: mongo
     expose:
@@ -136,5 +299,6 @@ services:
       - uchuva:/app
       - ./docker/filebeat/filebeat.yml:/filebeat.yml
 
+# Persistent volumes
 volumes:
-  uchuva:    
+  uchuva:

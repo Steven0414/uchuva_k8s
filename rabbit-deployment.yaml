@@ -2,8 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f docker-compose.yml
-    kompose.version: 1.22.0 (955b78124)
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f docker-compose.yml
+    kompose.version: 1.21.0 (992df58d8)
   creationTimestamp: null
   labels:
     io.kompose.service: rabbit
@@ -17,30 +17,33 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert -f docker-compose.yml
-        kompose.version: 1.22.0 (955b78124)
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f docker-compose.yml
+        kompose.version: 1.21.0 (992df58d8)
       creationTimestamp: null
       labels:
         io.kompose.service: rabbit
     spec:
       containers:
-        - env:
-            - name: RABBITMQ_DEFAULT_PASS
-              value: password
-            - name: RABBITMQ_DEFAULT_USER
-              value: user
-          image: rabbitmq:3-management-alpine
-          name: rabbit
-          ports:
-            - containerPort: 5672
-            - containerPort: 15671
-            - containerPort: 15672
-            - containerPort: 15691
-            - containerPort: 15692
-            - containerPort: 25672
-            - containerPort: 4369
-            - containerPort: 5671
-          resources: {}
+      - env:
+        - name: RABBITMQ_DEFAULT_PASS
+          value: password
+        - name: RABBITMQ_DEFAULT_USER
+          value: user
+        image: rabbitmq:3-management-alpine
+        imagePullPolicy: ""
+        name: rabbit
+        ports:
+        - containerPort: 5672
+        - containerPort: 15671
+        - containerPort: 15672
+        - containerPort: 15691
+        - containerPort: 15692
+        - containerPort: 25672
+        - containerPort: 4369
+        - containerPort: 5671
+        resources: {}
       hostname: my-rabbit
       restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
 status: {}

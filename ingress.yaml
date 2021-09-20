@@ -1,0 +1,246 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: uchuva-ingress
+  namespace: default
+  annotations:
+    ingress.kubernetes.io/add-base-url: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1$2
+spec:
+  rules:
+    - http:
+        paths:
+          # Endpoints servicio index
+          - path: /(.*)
+            backend:
+              service:
+                name: uchuva-index
+                port:
+                  number: 3000
+            pathType: Prefix
+          - path: /(register.*)(/|$)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-index
+                port:
+                  number: 3000
+          - path: /(developers.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-index
+                port:
+                  number: 3000
+          - path: /(login.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-index
+                port:
+                  number: 3000
+          - path: /(loginapi.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-index
+                port:
+                  number: 3000
+          - path: /(logout.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-index
+                port:
+                  number: 3000
+
+          # Endpoints servicio consola
+          - path: /(consola.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-consola
+                port:
+                  number: 3000
+
+          # Endpoints servicio ejecuciones
+          - path: /(statusdag.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-ejecuciones
+                port:
+                  number: 3000
+          - path: /(datanodedag.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-ejecuciones
+                port:
+                  number: 3000
+
+          # Endpoints servicio programas
+          - path: /(listarprogramas.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-programas
+                port:
+                  number: 3000
+
+          # Endpoints servicio dag
+          - path: /(user.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-dag
+                port:
+                  number: 3000
+          - path: /(creardag.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-dag
+                port:
+                  number: 3000
+          - path: /(editar.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-dag
+                port:
+                  number: 3000
+          - path: /(save.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-dag
+                port:
+                  number: 3000
+          - path: /(eliminardag.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-dag
+                port:
+                  number: 3000
+
+          # Endpoints servicio builds
+          - path: /(build.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-builds
+                port:
+                  number: 3000
+          - path: /(builds.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-builds
+                port:
+                  number: 3000
+
+          # Endpoints servicio vfs
+          - path: /(eliminararchivo.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-vfs
+                port:
+                  number: 3000
+          - path: /(descargararchivo.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-vfs
+                port:
+                  number: 3000
+          - path: /(descargarmultiple.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-vfs
+                port:
+                  number: 3000
+          - path: /(cambiarvisibilidad.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-vfs
+                port:
+                  number: 3000
+          - path: /(editararchivo.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-vfs
+                port:
+                  number: 3000
+          - path: /(buscar.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-vfs
+                port:
+                  number: 3000
+          - path: /(listar.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-vfs
+                port:
+                  number: 3000
+          - path: /(filemanager.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-vfs
+                port:
+                  number: 3000
+          - path: /(creararchivo.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-vfs
+                port:
+                  number: 3000
+          - path: /(creararchivos.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-vfs
+                port:
+                  number: 3000
+          - path: /(contenidoarchivo.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-vfs
+                port:
+                  number: 3000
+          - path: /(crearcarpeta.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-vfs
+                port:
+                  number: 3000
+
+          # Endpoints servicio run
+          - path: /(run.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-run
+                port:
+                  number: 3000
+                  
+          # Endpoints servicio admin
+          - path: /(admin.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: uchuva-admin
+                port:
+                  number: 3000

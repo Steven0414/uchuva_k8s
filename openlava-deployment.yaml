@@ -2,8 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f docker-compose.yml
-    kompose.version: 1.22.0 (955b78124)
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f docker-compose.yml
+    kompose.version: 1.21.0 (992df58d8)
   creationTimestamp: null
   labels:
     io.kompose.service: openlava
@@ -18,25 +18,27 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert -f docker-compose.yml
-        kompose.version: 1.22.0 (955b78124)
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f docker-compose.yml
+        kompose.version: 1.21.0 (992df58d8)
       creationTimestamp: null
       labels:
         io.kompose.service: openlava
     spec:
       containers:
-        - image: steven0414/openlava
-          name: openlava
-          ports:
-            - containerPort: 22
-          resources: {}
-          volumeMounts:
-            - mountPath: /app
-              name: uchuva
+      - image: steven0414/openlava
+        imagePullPolicy: ""
+        name: openlava
+        ports:
+        - containerPort: 22
+        resources: {}
+        volumeMounts:
+        - mountPath: /app
+          name: uchuva
       hostname: docker
       restartPolicy: Always
+      serviceAccountName: ""
       volumes:
-        - name: uchuva
-          persistentVolumeClaim:
-            claimName: uchuva
+      - name: uchuva
+        persistentVolumeClaim:
+          claimName: uchuva
 status: {}

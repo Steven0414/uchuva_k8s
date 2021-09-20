@@ -1,0 +1,11 @@
+#!/bin/bash
+# Author: Erick Steven Garcia
+# Function: start_ingress
+# Description: Enables ingress-nginx add-on
+# for minikube and lists the pods in the 
+# ingress' namespace
+
+minikube addons enable ingress
+ 
+kubectl get pods -n ingress-nginx
+

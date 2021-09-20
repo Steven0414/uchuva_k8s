@@ -2,8 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f docker-compose.yml
-    kompose.version: 1.22.0 (955b78124)
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f docker-compose.yml
+    kompose.version: 1.21.0 (992df58d8)
   creationTimestamp: null
   labels:
     io.kompose.service: slurm
@@ -18,28 +18,30 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert -f docker-compose.yml
-        kompose.version: 1.22.0 (955b78124)
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f docker-compose.yml
+        kompose.version: 1.21.0 (992df58d8)
       creationTimestamp: null
       labels:
         io.kompose.service: slurm
     spec:
       containers:
-        - image: agaveapi/slurm
-          name: slurm
-          ports:
-            - containerPort: 22
-            - containerPort: 10389
-            - containerPort: 6817
-            - containerPort: 6818
-          resources: {}
-          volumeMounts:
-            - mountPath: /app
-              name: uchuva
+      - image: agaveapi/slurm
+        imagePullPolicy: ""
+        name: slurm
+        ports:
+        - containerPort: 22
+        - containerPort: 10389
+        - containerPort: 6817
+        - containerPort: 6818
+        resources: {}
+        volumeMounts:
+        - mountPath: /app
+          name: uchuva
       hostname: docker.example.com
       restartPolicy: Always
+      serviceAccountName: ""
       volumes:
-        - name: uchuva
-          persistentVolumeClaim:
-            claimName: uchuva
+      - name: uchuva
+        persistentVolumeClaim:
+          claimName: uchuva
 status: {}

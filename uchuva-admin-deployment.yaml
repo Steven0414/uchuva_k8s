@@ -3,35 +3,46 @@ kind: Deployment
 metadata:
   annotations:
     kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f docker-compose.yml
+    kompose.service.type: nodeport
     kompose.version: 1.21.0 (992df58d8)
   creationTimestamp: null
   labels:
-    io.kompose.service: htcondor
-  name: htcondor
+    io.kompose.service: uchuva-admin
+  name: uchuva-admin
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: htcondor
+      io.kompose.service: uchuva-admin
   strategy:
     type: Recreate
   template:
     metadata:
       annotations:
         kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f docker-compose.yml
+        kompose.service.type: nodeport
         kompose.version: 1.21.0 (992df58d8)
       creationTimestamp: null
       labels:
-        io.kompose.service: htcondor
+        io.kompose.service: uchuva-admin
     spec:
       containers:
-      - image: steven0414/htcondor
+      - env:
+        - name: BMANAGER
+          value: "3"
+        - name: CONDOR_JOB_OWNER
+          value: uchuva
+        - name: CONDOR_URL
+          value: http://htcondor:8080/
+        - name: QUEUE
+          value: amqp://user:password@rabbit
+        - name: SHARE
+          value: /app
+        image: steven0414/uchuva_admin
         imagePullPolicy: ""
-        name: htcondor
+        name: uchuva-admin
         ports:
-        - containerPort: 10389
-        - containerPort: 22
-        - containerPort: 9618
+        - containerPort: 3000
         resources: {}
         volumeMounts:
         - mountPath: /app

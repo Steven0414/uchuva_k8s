@@ -3,17 +3,19 @@ kind: Service
 metadata:
   annotations:
     kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f docker-compose.yml
+    kompose.service.type: nodeport
     kompose.version: 1.21.0 (992df58d8)
   creationTimestamp: null
   labels:
-    io.kompose.service: openlava
-  name: openlava
+    io.kompose.service: uchuva-admin
+  name: uchuva-admin
 spec:
   ports:
-  - name: "22"
-    port: 22
-    targetPort: 22
+  - name: "3000"
+    port: 3000
+    targetPort: 3000
   selector:
-    io.kompose.service: openlava
+    io.kompose.service: uchuva-admin
+  type: LoadBalancer
 status:
   loadBalancer: {}

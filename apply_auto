@@ -1,1 +1,7 @@
+#!/bin/bash
+# Author: Erick Steven Garcia
+# Function: apply_auto
+# Description: Deploys all the yaml
+# files in directory to K8s
+
 for i in *.yaml; do kubectl apply -f $i; done

@@ -2,8 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f docker-compose.yml
-    kompose.version: 1.22.0 (955b78124)
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f docker-compose.yml
+    kompose.version: 1.21.0 (992df58d8)
   creationTimestamp: null
   labels:
     io.kompose.service: filebeat
@@ -18,27 +18,24 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert -f docker-compose.yml
-        kompose.version: 1.22.0 (955b78124)
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f docker-compose.yml
+        kompose.version: 1.21.0 (992df58d8)
       creationTimestamp: null
       labels:
         io.kompose.service: filebeat
     spec:
       containers:
-        - image: prima/filebeat
-          name: filebeat
-          resources: {}
-          volumeMounts:
-            - mountPath: /app
-              name: uchuva
-            - mountPath: /filebeat.yml
-              name: filebeat-claim1
+      - image: steven0414/filebeat
+        imagePullPolicy: ""
+        name: filebeat
+        resources: {}
+        volumeMounts:
+        - mountPath: /app
+          name: uchuva
       restartPolicy: Always
+      serviceAccountName: ""
       volumes:
-        - name: uchuva
-          persistentVolumeClaim:
-            claimName: uchuva
-        - name: filebeat-claim1
-          persistentVolumeClaim:
-            claimName: filebeat-claim1
+      - name: uchuva
+        persistentVolumeClaim:
+          claimName: uchuva
 status: {}

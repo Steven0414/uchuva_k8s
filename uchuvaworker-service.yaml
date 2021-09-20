@@ -2,17 +2,17 @@ apiVersion: v1
 kind: Service
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f docker-compose.yml
-    kompose.version: 1.22.0 (955b78124)
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f docker-compose.yml
+    kompose.version: 1.21.0 (992df58d8)
   creationTimestamp: null
   labels:
     io.kompose.service: uchuvaworker
   name: uchuvaworker
 spec:
   ports:
-    - name: "3000"
-      port: 3000
-      targetPort: 3000
+  - name: "3000"
+    port: 3000
+    targetPort: 3000
   selector:
     io.kompose.service: uchuvaworker
 status:
