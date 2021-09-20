@@ -96,6 +96,19 @@ You can verify the health and the state of any resource deployed on Minikube thr
 minikube dashboard
 ```
 
+### LoadTest
+
+This test allows to verify the response time of the uchuva-index microservice.
+This test is executed with [K6/LoadImpact](https://k6.io/).
+
+#### Testing with K6/LoadImpact Docker Container
+```bash
+cd ./test
+sudo docker run -i loadimpact/k6 run -< loadtest.js
+```
+
+A complete testing guide with K6/loadImpact can be found at [K6's official documentation](https://k6.io/docs/).
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
