@@ -1,8 +1,10 @@
 # Uchuva: Microservices implementation
 
-Uchuva is a scientific web portal that allow users to create workflows and submit to HTCondor (Dagman), Slurm, OpenLava (LSF) and Torque (PBS). Is designed to be fast, flexible and simple.
+Uchuva is a scientific web portal that allows to create workflows and submit them to HTCondor (Dagman), Slurm, OpenLava (LSF) and Torque (PBS). 
+It is designed to be fast, flexible and simple.
 
-This is a new microservices implementation that optimizes uchuva and make it deployable on Kubernetes!
+Uchuva was implemented following a monolithic approach.
+This new implementation follows a microservice architecture thus enhances the scalability and upgradability aspects of the original version.
 
 Original project [GitHub repository](https://github.com/carlochess/uchuva).
 
@@ -12,10 +14,22 @@ Original project [GitHub repository](https://github.com/carlochess/uchuva).
 
 Verify that you have enabled virtualization.
 
-#### In Linux
+#### On Linux
 
 ```bash
 egrep --color 'vmx|svm' /proc/cpuinfo
+```
+
+#### On Mac
+
+```bash
+sysctl -a | grep machdep.cpu.features | grep VMX
+```
+
+It must show something like this:
+
+```
+machdep.cpu.features: FPU VME DE PSE TSC MSR PAE MCE CX8 APIC SEP MTRR PGE MCA CMOV PAT PSE36 CLFSH DS ACPI MMX FXSR SSE SSE2 SS HTT TM PBE SSE3 PCLMULQDQ DTES64 MON DSCPL VMX EST TM2 SSSE3 FMA CX16 TPR PDCM SSE4.1 SSE4.2 x2APIC MOVBE POPCNT AES PCID XSAVE OSXSAVE SEGLIM64 TSCTMR AVX1.0 RDRAND F16C
 ```
 
 ### Dependencies
@@ -24,7 +38,7 @@ egrep --color 'vmx|svm' /proc/cpuinfo
 
 If you don't have a hypervisor installed, please install one. [VirtualBox](https://www.virtualbox.org/wiki/Downloads), [KVM](https://www.linux-kvm.org/page/Main_Page).
 
-#### Install kubectl
+#### Install kubectl on Linux
 
 For kubectl installation through [snap](https://snapcraft.io/):
 
@@ -46,7 +60,15 @@ sudo apt-get install -y kubectl
 
 A complete installation guide for kubectl can be found at [Install and SetUp Kubectl](https://v1-18.docs.kubernetes.io/docs/tasks/tools/install-kubectl/).
 
-#### Install Minikube
+#### Install kubectl on Mac
+
+```bash
+brew install kubectl
+```
+
+Additional details can be found at [Install and Set Up kubectl on macOS](https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/).
+
+#### Install Minikube on Linux
 
 For local Kubernetes cluster.
 
@@ -57,6 +79,14 @@ sudo cp minikube /usr/local/bin && rm minikube
 ```
 
 A complete installation guide for minikube can be found at [Install Minikube](https://v1-18.docs.kubernetes.io/es/docs/tasks/tools/install-minikube/).
+
+
+#### Install Minikube on Mac
+
+```bash
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64
+sudo install minikube-darwin-amd64 /usr/local/bin/minikube
+```
 
 #### Install Minikube Ingress Controller Add-On
 
